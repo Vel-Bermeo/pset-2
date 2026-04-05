@@ -2,35 +2,31 @@ services:
   data-warehouse:
     image: postgres:13
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=warehouse
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - warehouse-volume:/var/lib/postgressql/data
+      - warehouse-volume:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U root -d warehouse"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 1m30s
       timeout: 10s
       retries: 5
       start_period: 5s
 
-  #ingesta-datos:
-  #  image: ingesta-datos
-  #  build: .
-  #  depends_on:
-  #    data-warehouse:
-  #      condition: service_healthy
-  
   warehouse-ui:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=evelyn-150@hotmail.com
-      - PGADMIN_DEFAULT_PASSWORD=root
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "9000:80"
-  
+    depends_on:
+      data-warehouse:
+        condition: service_healthy
+
   orquestador:
     image: mageai/mageai
     volumes:
@@ -38,5 +34,9 @@ services:
     ports:
       - "6789:6789"
     command: /app/run_app.sh mage start orquestador
+    depends_on:
+      data-warehouse:
+        condition: service_healthy
+
 volumes:
   warehouse-volume:
