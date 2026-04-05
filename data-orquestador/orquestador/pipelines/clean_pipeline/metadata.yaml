@@ -1,0 +1,163 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: postgres
+    data_provider_profile: default
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - sql_02_stg_trips_valid
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_01_clean_schema
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks: []
+  uuid: sql_01_clean_schema
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    data_provider: postgres
+    data_provider_profile: default
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - sql_03_dim_vendor
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_02_stg_trips_valid
+  retry_config: null
+  status: failed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_01_clean_schema
+  uuid: sql_02_stg_trips_valid
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    data_provider: postgres
+    data_provider_profile: default
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - sql_04_dim_payment_type
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_03_dim_vendor
+  retry_config: null
+  status: failed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_02_stg_trips_valid
+  uuid: sql_03_dim_vendor
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - sql_05_dim_pickup_location
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_04_dim_payment_type
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_03_dim_vendor
+  uuid: sql_04_dim_payment_type
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - sql_06_dim_dropoff_location
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_05_dim_pickup_location
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_04_dim_payment_type
+  uuid: sql_05_dim_pickup_location
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - sql_07_fact_trips
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_06_dim_dropoff_location
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_05_dim_pickup_location
+  uuid: sql_06_dim_dropoff_location
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: sql_07_fact_trips
+  retry_config: null
+  status: updated
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - sql_06_dim_dropoff_location
+  uuid: sql_07_fact_trips
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-04-04 02:12:44.181471+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: clean_pipeline
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: clean_pipeline
+variables_dir: /home/src/mage_data/orquestador
+widgets: []
