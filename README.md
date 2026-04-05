@@ -29,16 +29,24 @@ Fuente NYC Taxi → Mage (raw pipeline) → PostgreSQL (schema raw)
 
 ## Configuraciones y Secrets
 
-Variables definidas en docker-compose.yaml
-Las credenciales de los servicios estan configuradas directamente en docker-compose.yaml para el entorno local de desarrollo:
+## Manejo de credenciales
 
-Servicio: data-warehouse (PostgreSQL) POSTGRES_USER = root POSTGRES_PASSWORD = root POSTGRES_DB = warehouse
+Las credenciales del sistema no están hardcodeadas en el código.
 
-Servicio: warehouse-ui (pgAdmin) PGADMIN_DEFAULT_EMAIL = evelyn-150@hotmail.com PGADMIN_DEFAULT_PASSWORD = root
+Se gestionan mediante variables de entorno definidas en un archivo `.env`, el cual no se incluye en el repositorio por seguridad.
 
-Servicio: orquestador (Mage AI) Proyecto : orquestador Volumen : ./data-orquestador → /home/src
+Para ejecutar el proyecto:
 
-Las credenciales son válidas solo para desarrollo local
+1. Crear un archivo `.env` basado en `.env.example`
+2. Definir las variables necesarias:
+
+```env
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=warehouse
+PGADMIN_DEFAULT_EMAIL=your_email@example.com
+PGADMIN_DEFAULT_PASSWORD=your_password
+```
 
 ### Secrets en Mage AI
 La conexion a PostgreSQL desde los pipelines se maneja EXCLUSIVAMENTE mediante secrets de Mage AI. Ningun bloque de codigo contiene credenciales en texto plano.
@@ -64,7 +72,7 @@ default:
 1. Clonar el repositorio:
 
 ```bash
-git clone <TU_REPO>
+git clone https://github.com/Vel-Bermeo/pset-2.git
 cd pset-2
 
 2. Levantar los servicios:
