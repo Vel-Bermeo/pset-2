@@ -47,7 +47,9 @@ Acceso a herramientas
 Mage: http://localhost:6789
 pgAdmin: http://localhost:9000
 
-▶ Ejecución de pipelines
+
+
+## Ejecución de pipelines
  -Pipeline RAW (Ingesta)
 
 Responsable de:
