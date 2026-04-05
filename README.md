@@ -167,13 +167,12 @@ procesamiento eficiente por memoria
 
 Debido a limitaciones de almacenamiento local:
 
-la tabla clean.fact_trips se generó con una muestra representativa (100,000 registros de 2024-01)
+La tabla clean.fact_trips se generó con una muestra representativa (100,000 registros de 2024-01)
 
 Esto permite:
-
-demostrar el modelo dimensional
-evitar errores de memoria
-mantener reproducibilidad
+- Demostrar el modelo dimensional
+- Evitar errores de memoria
+- Mantener reproducibilidad
 
 ## Triggers y automatización
 Pipeline RAW: ejecución manual por mes
