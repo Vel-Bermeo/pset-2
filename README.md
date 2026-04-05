@@ -578,7 +578,7 @@ LEFT JOIN clean.dim_dropoff_location dof
 
 Este proyecto implementa un pipeline ELT completo que:
 
-ingiere datos históricos
+Ingiere datos históricos
 construye un data warehouse
 aplica limpieza
 implementa modelo dimensional
@@ -587,3 +587,5 @@ maneja limitaciones de infraestructura
 Autor:
 
 * Evelyn Bermeo
+  
+  USFQ
