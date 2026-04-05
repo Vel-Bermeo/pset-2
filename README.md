@@ -50,7 +50,7 @@ pgAdmin: http://localhost:9000
 ```
 
 ## Ejecución de pipelines
- -Pipeline RAW (Ingesta)
+ ▶Pipeline RAW (Ingesta)
 
 Responsable de:
 
@@ -63,7 +63,7 @@ Características:
 carga mensual
 idempotente (borra e inserta por mes)
 manejo de errores
- -Pipeline CLEAN (Transformación)
+ ▶Pipeline CLEAN (Transformación)
 
 Responsable de:
 
@@ -73,14 +73,15 @@ construcción de modelo dimensional
 
 Ejecutado mediante SQL en PostgreSQL (pgAdmin).
 
-▶ Modelo de datos
+## Modelo de datos
 - Granularidad
 
 La tabla de hechos representa:
 
 - un viaje individual
 
-▶ Tabla de hechos
+## Tabla de hechos
+
 clean.fact_trips
 
 Contiene:
@@ -90,19 +91,19 @@ duración
 montos
 claves de dimensiones
 
-▶ Dimensiones
+## Dimensiones
 clean.dim_vendor
 clean.dim_payment_type
 clean.dim_pickup_location
 clean.dim_dropoff_location
 
-▶ Relaciones
+## Relaciones
 fact_trips.vendor_key → dim_vendor.vendor_key
 fact_trips.payment_type_key → dim_payment_type.payment_type_key
 fact_trips.pickup_location_key → dim_pickup_location.pickup_location_key
 fact_trips.dropoff_location_key → dim_dropoff_location.dropoff_location_key
 
-▶ Validaciones realizadas
+## Validaciones realizadas
 SELECT COUNT(*) FROM raw.ny_taxi_trips;
 
 SELECT COUNT(*) FROM clean.fact_trips;
@@ -112,21 +113,21 @@ FROM raw.ny_taxi_trips
 GROUP BY source_year, source_month
 ORDER BY source_year, source_month;
 
-▶ Reglas de limpieza aplicadas
+## Reglas de limpieza aplicadas
 eliminación de registros inválidos
 validación de fechas (pickup ≤ dropoff)
 filtrado de valores negativos
 eliminación de nulos críticos
 cálculo de duración del viaje
 
-▶ Decisiones de diseño
+## Decisiones de diseño
 separación raw / clean
 modelo tipo star schema
 claves sustitutas
 uso de UNLOGGED TABLE para performance
 procesamiento eficiente por memoria
 
-▶ Limitaciones y decisiones técnicas
+## Limitaciones y decisiones técnicas
 
 Debido a limitaciones de almacenamiento local:
 
@@ -138,21 +139,21 @@ demostrar el modelo dimensional
 evitar errores de memoria
 mantener reproducibilidad
 
-▶Triggers y automatización
+## Triggers y automatización
 Pipeline RAW: ejecución manual por mes
 Pipeline CLEAN: ejecución posterior
 
-▶ Manejo de configuración
+## Manejo de configuración
 variables en .env
 configuración en io_config.yaml
 sin credenciales hardcodeadas
 
-▶ Volumen de datos
+## Volumen de datos
 14 meses procesados
 ~3M registros por mes
 +40M registros en raw
 
-▶ Estructura del proyecto
+## Estructura del proyecto
 pset-2/
 ├── docker-compose.yaml
 ├── ingest-data.py
@@ -161,7 +162,7 @@ pset-2/
 ├── notebooks/
 └── data-orquestador/
 
-▶ Conclusión
+## Conclusión
 
 Este proyecto implementa un pipeline ELT completo que:
 
@@ -173,4 +174,4 @@ maneja limitaciones de infraestructura
 
 Autor:
 
-Evelyn Bermeo
+* Evelyn Bermeo
