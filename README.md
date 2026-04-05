@@ -90,31 +90,31 @@ pgAdmin: http://localhost:9000
 
 ## Ejecución de pipelines
 
-```
+
  ▶Pipeline RAW (Ingesta)
 
 Responsable de:
 
-descarga de datos .parquet
-carga en PostgreSQL
-almacenamiento en raw.ny_taxi_trips
+- Descarga de datos .parquet
+- Carga en PostgreSQL
+- Almacenamiento en raw.ny_taxi_trips
 
 Características:
 
-carga mensual
-idempotente (borra e inserta por mes)
-manejo de errores
+- Carga mensual
+- Idempotente (borra e inserta por mes)
+- Manejo de errores
 
  ▶Pipeline CLEAN (Transformación)
 
 Responsable de:
 
-limpieza de datos
-validación de calidad
-construcción de modelo dimensional
+- Limpieza de datos
+- Validación de calidad
+- Construcción de modelo dimensional
 
-Ejecutado mediante SQL en PostgreSQL (pgAdmin)
-```
+Ejecutado mediante SQL en PostgreSQL
+
 
 ## Modelo de datos
 - Granularidad
@@ -147,14 +147,18 @@ fact_trips.pickup_location_key → dim_pickup_location.pickup_location_key
 fact_trips.dropoff_location_key → dim_dropoff_location.dropoff_location_key
 
 ## Validaciones realizadas
+```
 SELECT COUNT(*) FROM raw.ny_taxi_trips;
-
+```
+```
 SELECT COUNT(*) FROM clean.fact_trips;
-
+```
+```
 SELECT source_year, source_month, COUNT(*)
 FROM raw.ny_taxi_trips
 GROUP BY source_year, source_month
 ORDER BY source_year, source_month;
+```
 
 ## Reglas de limpieza aplicadas
 
@@ -451,6 +455,7 @@ def test_output(output, *args):
 Se realizó un flujo de 7 bloques en SQL:
 
 ▶Bloque 1: Crear esquema
+
 ```env
 CREATE SCHEMA IF NOT EXISTS clean;
 ```
