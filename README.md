@@ -185,8 +185,8 @@ Esto permite:
 - Mantener reproducibilidad
 
 ## Triggers y automatización
-Pipeline RAW: ejecución manual por mes
-Pipeline CLEAN: ejecución posterior
+- Pipeline RAW: ejecución por mes
+- Pipeline CLEAN: ejecución posterior
 
 ## Manejo de configuración
 
