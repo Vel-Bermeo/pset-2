@@ -82,6 +82,8 @@ pgAdmin: http://localhost:9000
 ```
 
 ## Ejecución de pipelines
+
+```
  ▶Pipeline RAW (Ingesta)
 
 Responsable de:
@@ -104,7 +106,8 @@ limpieza de datos
 validación de calidad
 construcción de modelo dimensional
 
-Ejecutado mediante SQL en PostgreSQL (pgAdmin).
+Ejecutado mediante SQL en PostgreSQL (pgAdmin)
+```
 
 ## Modelo de datos
 - Granularidad
@@ -187,6 +190,8 @@ sin credenciales hardcodeadas
 +40M registros en raw
 
 ## Estructura del proyecto
+
+```
 pset-2/
 ├── docker-compose.yaml
 ├── ingest-data.py
@@ -194,6 +199,7 @@ pset-2/
 ├── README.md
 ├── notebooks/
 └── data-orquestador/
+```
 
 ## Pipelines RAW y CLEAN
 
