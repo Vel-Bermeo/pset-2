@@ -55,7 +55,7 @@ Configurar los siguientes secrets antes de ejecutar cualquier pipeline:
 
 Mage UI → Settings → Secrets → New Secret
 
-Nombre secret Valor ────────────────── ───────────────── POSTGRES_USER → root POSTGRES_PASSWORD → root POSTGRES_HOST → data-warehouse POSTGRES_PORT → 5432 POSTGRES_DB → warehouse
+Nombre secret Valor ────── ─────── POSTGRES_USER → root POSTGRES_PASSWORD → root POSTGRES_HOST → data-warehouse POSTGRES_PORT → 5432 POSTGRES_DB → warehouse
 
 Estos secrets se referencian en data-orquestador/orquestador/io_config.yaml:
 
@@ -68,10 +68,9 @@ default:
 
 
 ## Cómo levantar el entorno
-
+```bash
 1. Clonar el repositorio:
 
-```bash
 git clone https://github.com/Vel-Bermeo/pset-2.git
 cd pset-2
 
@@ -130,10 +129,10 @@ clean.fact_trips
 
 Contiene:
 
-métricas del viaje
-duración
-montos
-claves de dimensiones
+- métricas del viaje
+- duración
+- montos
+- claves de dimensiones
 
 ## Dimensiones
 clean.dim_vendor
@@ -158,18 +157,21 @@ GROUP BY source_year, source_month
 ORDER BY source_year, source_month;
 
 ## Reglas de limpieza aplicadas
-eliminación de registros inválidos
-validación de fechas (pickup ≤ dropoff)
-filtrado de valores negativos
-eliminación de nulos críticos
-cálculo de duración del viaje
+
+- Eliminación de registros inválidos
+- Validación de fechas (pickup ≤ dropoff)
+- Filtrado de valores negativos
+- Eliminación de nulos críticos
+- Cálculo de duración del viaje
+
 
 ## Decisiones de diseño
-separación raw / clean
-modelo tipo star schema
-claves sustitutas
-uso de UNLOGGED TABLE para performance
-procesamiento eficiente por memoria
+
+- Separación raw / clean
+- Modelo tipo star schema
+- Claves sustitutas
+- Uso de UNLOGGED TABLE para performance
+- Procesamiento eficiente por memoria
 
 ## Limitaciones y decisiones técnicas
 
@@ -187,14 +189,15 @@ Pipeline RAW: ejecución manual por mes
 Pipeline CLEAN: ejecución posterior
 
 ## Manejo de configuración
-variables en .env
-configuración en io_config.yaml
-sin credenciales hardcodeadas
+
+- Variables en .env
+- Configuración en io_config.yaml
+- Sin credenciales hardcodeadas
 
 ## Volumen de datos
-14 meses procesados
-~3M registros por mes
-+40M registros en raw
+- 14 meses procesados
+- ~3M registros por mes
+- +40M registros en raw
 
 ## Estructura del proyecto
 
@@ -214,7 +217,7 @@ pset-2/
 
 Se desarrolló en Python:
 
-```
+```env
 if 'data_loader' not in globals():
     from mage_ai.data_preparation.decorators import data_loader
 if 'test' not in globals():
@@ -448,13 +451,13 @@ def test_output(output, *args):
 Se realizó un flujo de 7 bloques en SQL:
 
 ▶Bloque 1: Crear esquema
-```
+```env
 CREATE SCHEMA IF NOT EXISTS clean;
 ```
 
 ▶Bloque 2: Tabla Staging
 
-```
+```env
 DROP TABLE IF EXISTS clean.stg_trips_valid;
 
 CREATE UNLOGGED TABLE clean.stg_trips_valid AS
@@ -496,7 +499,7 @@ WHERE tpep_pickup_datetime IS NOT NULL
 
 ▶Bloque 3: Dim vendor
 
-```
+```env
 DROP TABLE IF EXISTS clean.dim_vendor;
 
 CREATE TABLE clean.dim_vendor AS
@@ -508,7 +511,8 @@ WHERE vendor_id IS NOT NULL;
 ```
 
 ▶Bloque 4: Dim payment_type
-```
+
+```env
 DROP TABLE IF EXISTS clean.dim_payment_type;
 
 CREATE TABLE clean.dim_payment_type AS
@@ -520,7 +524,8 @@ WHERE payment_type IS NOT NULL;
 ```
 
 ▶Bloque 5: Dim pickup_location
-```
+
+```env
 DROP TABLE IF EXISTS clean.dim_pickup_location;
 
 CREATE TABLE clean.dim_pickup_location AS
@@ -532,7 +537,8 @@ WHERE pu_location_id IS NOT NULL;
 ```
 
 ▶Bloque 6: Dim dropoff_location
-```
+
+```env
 DROP TABLE IF EXISTS clean.dim_dropoff_location;
 
 CREATE TABLE clean.dim_dropoff_location AS
@@ -544,7 +550,8 @@ WHERE do_location_id IS NOT NULL;
 
 ```
 ▶Bloque 7: Fact Table
-```
+
+```env
 DROP TABLE IF EXISTS clean.fact_trips;
 
 CREATE UNLOGGED TABLE clean.fact_trips AS
